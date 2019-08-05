@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Sum from './views/sum.vue'
 
 Vue.use(Router)
 
@@ -10,16 +10,80 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      component: Sum,
+      redirect: '/sum/home'
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/sum',
+      component: Sum,
+      children: [
+        {
+          path: '/sum/home',
+          name: 'home',
+          component: () => import('./views/home')
+        },
+        {
+          path: '/sum/apps',
+          name: 'apps',
+          component: () => import('./views/apps')
+        },
+        {
+          path: '/sum/cart',
+          name: 'cart',
+          meta: { requireAuth: true },
+          component: () => import('./views/cart')
+        },
+        {
+          path: '/sum/contact',
+          name: 'contact',
+          component: () => import('./views/contact')
+        },
+      ]
+    },
+    {
+      path: '/search/:kw',
+      name: 'search',
+      component: () => import('./views/pages/search')
+    },
+    {
+      path: '/product_details:/lid',
+      name: 'product_details',
+      component: () => import ('./views/pages/product_details') 
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/login')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('./views/register')
+    },
+    {
+      path: '/address',
+      name: 'address',
+      component: () => import('./views/pages/address')
+    },
+    {
+      path: '/setAddress/:sid',
+      name: 'setAddress',
+      component: () => import('./views/pages/setAddress')
+    },
+    {
+      path: '/confim',
+      name: 'confim',
+      component: () => import('./views/pages/confim')
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: () => import('./views/pages/order')
+    },
+    {
+      path: '/orderDetail',
+      name: 'orderDetail',
+      component: () => import('./views/pages/orderDetail')
     }
   ]
 })
